@@ -8,12 +8,14 @@ url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classifi
 page = requests.get(url).text
 doc = BeautifulSoup(page, "html.parser")
 
-item_count = int(doc.find(class_="search-results-count-txt").string)
+total_pages = int(doc.find(class_="pagination-info js-pagination-info hidden-on-mobile hidden-on-tablet-portrait").string.strip()[10:])
 per_page = 80
 
 items_found = {}
 
-for start in range(0, item_count, per_page):
+for page in range(total_pages):
+    start = page * per_page
+
     url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classification&prefv1=boohooMAN%20Tall%7CMain%20Collection&prefn2=sizeRefinement&prefv2={size}&start={start}&sz={per_page}"
     page = requests.get(url).text
     doc = BeautifulSoup(page, "html.parser")
@@ -22,7 +24,6 @@ for start in range(0, item_count, per_page):
 
     # all instances where there is a string within a tag that states "oversized"
     items = div.find_all(string = re.compile("Oversized"))
-    
     for item in items:
         # title of product is WITHIN an <a> tag so that is the parent
         parents = item.parent.parent.parent
