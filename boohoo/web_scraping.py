@@ -2,12 +2,20 @@ import re
 from bs4 import BeautifulSoup
 import requests
 
-user_input  = input("input size, color, max price with a space in between each: ")
+
+user_input  = input("input size, max price, and a color with a space in between each: ")
 filters = user_input.split()
 
-size = filters[0].upper()
-color = filters[1]
-max_price = int(filters[2])
+if len(filters) == 3:
+    size = filters[0].upper()
+    max_price = int(filters[1])
+    color = filters[2].capitalize() # url only accepst colors with first letter capitalized
+elif len(filters) == 2:
+    size = filters[0].upper()
+    max_price = int(filters[1])
+else:
+    raise ValueError("Input must contain at least a size and max price.")
+    
 
 
 url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classification&prefv1=boohooMAN%20Tall%7CMain%20Collection&prefn2=sizeRefinement&prefv2={size}&sz=80"
@@ -25,7 +33,7 @@ count = 0
 for page in range(total_pages):
     start = page * per_page
     # if user requests a color, adjust url accordingly
-    if color != "None":
+    if len(filters) == 3:
         url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classification&prefv1=boohooMAN%20Tall%7CMain%20Collection&prefn2=color&prefv2={color}&prefn3=sizeRefinement&prefv3={size}&start={start}&sz={per_page}"
     else:
         url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classification&prefv1=boohooMAN%20Tall%7CMain%20Collection&prefn2=sizeRefinement&prefv2={size}&start={start}&sz={per_page}"
@@ -45,7 +53,7 @@ for page in range(total_pages):
         
         next_parent = item.find_parent(class_="grid-tile")
 
-        # handles products NOT on sale (dont have a sales price)
+        # handles products NOT on sale that throw a None type error (dont have a sales price)
         try:
             sale_price = next_parent.find(class_="product-sales-price product-sales-price-percent")
             price = int(sale_price.contents[0].strip().replace("$", "")[:-3])
@@ -59,5 +67,8 @@ for page in range(total_pages):
         
 print(items_found)
 print(f"There are {count} items on sale!")
+
+# place into excel
+
 
     
