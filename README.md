@@ -1,4 +1,4 @@
-Using Python's BeautifulSoup library, I have developed a web scraper to retrieve desired data from one of my routinely used online shops. 
+Using Python's BeautifulSoup library, I have developed a web scraper to retrieve desired data from one of my routinely used online shops, boohooMAN.com. 
 I tend to buy a lot of oversized t-shirts specifically from the site, but there are some bugs in the websites functionality. 
 For example, I tend to only buy the shirts on sale, but when I set a filter for the maximum price range, it takes into account the 
 PREVIOUS price prior to the sale price. Therefore, if a product was $20, and its on sale for $10, the product is not shown if I set a maximum price to $15. 
