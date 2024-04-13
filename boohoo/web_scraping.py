@@ -20,7 +20,6 @@ else:
     raise ValueError("Input must contain at least a size and max price.")
     
 
-
 url = f"https://www.boohooman.com/us/search?q=oversized%20tshirt&prefn1=classification&prefv1=boohooMAN%20Tall%7CMain%20Collection&prefn2=sizeRefinement&prefv2={size}&sz=80"
 
 page = requests.get(url).text
@@ -77,6 +76,7 @@ std = workbook['Sheet1']
 for i in std.iter_rows():
     for cell in i:
         cell.value = None
+        cell.hyperlink = None 
 
 
 # populate headers
@@ -115,5 +115,6 @@ std.column_dimensions['D'].width = cell_width
 
 workbook.save('boohoo.xlsx')
 
+# adjust based on location of the excel file
 os.startfile('C:/Users/coope/Desktop/GitHub/T-Shirt-Web-Scraper/boohoo/boohoo.xlsx')
 
