@@ -1,3 +1,5 @@
+<h1>T-Shirt Webscraper</h1>
+
 Using Python's BeautifulSoup library, I have developed a web scraper to retrieve desired data from one of my routinely used online shops, boohooMAN.com. 
 I tend to buy a lot of oversized t-shirts specifically from the site, but there are some bugs in the websites functionality. 
 For example, I tend to only buy the shirts on sale, but when I set a filter for the maximum price range, it takes into account the 
